@@ -52,6 +52,10 @@
     "webpack-hot-middleware": "^2.0.0"
   },
   "dependencies": {
+    "alt": "^0.17.8",
+    "alt-container": "^1.0.0",
+    "immutable": "^3.7.5",
+    "node-uuid": "^1.4.3",
     "react": "^0.14.0",
     "react-dom": "^0.14.0"
   }

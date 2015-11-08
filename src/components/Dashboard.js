@@ -10,6 +10,8 @@ import TodoChart from './Chart'
 import TodosTable from './Table'
 import TodoForm from './Form'
 
+import TodoActions from './../actions/TodoActions'
+
 export default class extends Component {
 
   static propTypes = {};
@@ -20,23 +22,24 @@ export default class extends Component {
           <Tiles fill={true} flush={false}>
             <Tile align="center">
 
-              <TodoChart />
+              <TodoChart todos={this.props.todos} />
 
             </Tile>
             <Tile align="start">
               <Header><h3>My Tasks:</h3></Header>
 
-              <TodosTable />
+              <TodosTable todos={this.props.todos}/>
 
               <Button
                   label="Add Task"
                   primary={true}
                   strong={true}
-                  onClick={() => alert('add')}
+                  onClick={() => TodoActions.toggleIsAdding()}
               />
             </Tile>
           </Tiles>
 
+          <TodoForm isAdding={this.props.isAdding} />
 
         </Section>
     )

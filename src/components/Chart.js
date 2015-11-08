@@ -4,9 +4,27 @@ import Meter from 'grommet/components/Meter'
 
 export default class extends Component {
 
-  static propTypes = {};
+  static propTypes = {
+    todos: PropTypes.array.isRequired
+  };
 
   render() {
+    let tasksMap = {
+      error: 0,
+      ok: 0,
+      warning: 0
+    };
+
+    this.props.todos.map(task => {
+      tasksMap[task.status] += 1;
+    })
+
+    const series = [
+      getLabel('Past Due', tasksMap.error, 'error'),
+      getLabel('Due Soon', tasksMap.warning, 'warning'),
+      getLabel('Done', tasksMap.ok, 'ok')
+    ]
+
     return (
         <Meter
             series={series}
@@ -16,18 +34,6 @@ export default class extends Component {
     )
   }
 }
-
-const tasksMap = {
-  error: 1,
-  ok: 2,
-  warning: 3
-};
-
-const series = [
-  getLabel('Past Due', tasksMap.error, 'error'),
-  getLabel('Due Soon', tasksMap.warning, 'warning'),
-  getLabel('Done', tasksMap.ok, 'ok')
-]
 
 function getLabel(label, count, colorIndex) {
   return {

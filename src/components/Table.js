@@ -22,23 +22,25 @@ const tasks = [
 
 export default class extends Component {
 
-  static propTypes = {};
+  static propTypes = {
+    todos: PropTypes.array.isRequired
+  };
 
   render() {
     return (
         <Table>
           <tbody>
-          {tasks.map((task, index) => this.renderTask(task, index))}
+          {this.props.todos.map((todo) => this.renderTask(todo))}
           </tbody>
         </Table>
     )
   }
 
-  renderTask(task, index) {
+  renderTask(todo) {
     return (
-        <tr key={index}>
-          <td width="10%"><Status value={task.status} small={true} /></td>
-          <td>{task.item}</td>
+        <tr key={todo.id}>
+          <td width="10%"><Status value={todo.status} small={true} /></td>
+          <td>{todo.item}</td>
           <td width="10%">
             <Button type="icon" onClick={() => alert('del')}>
               <CloseIcon />

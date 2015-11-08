@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AltContainer from 'alt-container';
 
 import 'grommet/grommet.min.css'
 
@@ -8,6 +9,8 @@ import Title from 'grommet/components/Title'
 import Footer from 'grommet/components/Footer'
 
 import Dashboard from './components/Dashboard'
+
+import TodoStore from './stores/TodoStore'
 
 export default class extends Component {
   render() {
@@ -24,7 +27,9 @@ export default class extends Component {
 
           </Header>
 
-          <Dashboard />
+          <AltContainer store={TodoStore} >
+            <Dashboard />
+          </AltContainer>
 
           <Footer
               appCentered={true}

@@ -9,14 +9,30 @@ import Menu from 'grommet/components/Menu';
 import Button from 'grommet/components/Button';
 import Box from 'grommet/components/Box';
 
+import TodoActions from './../actions/TodoActions'
+
 export default class extends Component {
 
-  static propTypes = {};
+  static propTypes = {
+    isAdding: PropTypes.bool.isRequired
+  };
+
+  onSubmit(e) {
+    e.preventDefault()
+    const newTodo = {
+      status: this.refs.statusInput.value,
+      item: this.refs.taskInput.value
+    }
+
+    TodoActions.create(newTodo)
+  }
 
   render() {
+    if(!this.props.isAdding) { return null; }
+
     return (
-        <Layer onClose={() => alert('close')} closer={true}>
-          <Form onSubmit={() => alert('submit')}>
+        <Layer onClose={() => TodoActions.toggleIsAdding()} closer={true}>
+          <Form onSubmit={this.onSubmit.bind(this)}>
 
             <header><h1>Add Task</h1></header>
             <FormFields>
@@ -28,20 +44,14 @@ export default class extends Component {
                       name="task"
                       type="text"
                       ref="taskInput"
-                      onChange={this._onItemChange}
                   />
                 </FormField>
 
                 <FormField label="Status" htmlFor="statusInput">
-                  <select
-                      id="statusInput"
-                      name="status"
-                      onChange={this._onStatusChange}>
-
+                  <select id="statusInput" name="status" ref="statusInput">
                     <option value="ok">Done</option>
                     <option value="warning">Due Soon</option>
                     <option value="error">Past Due</option>
-
                   </select>
                 </FormField>
 
@@ -55,12 +65,12 @@ export default class extends Component {
                   <Button
                       label="OK"
                       primary={true}
-                      onClick={() => alert('ok')}
+                      onClick={this.onSubmit.bind(this)}
                       type="submit"
                   />
                 </Box>
                 <Box>
-                  <Button label="Cancel" onClick={() => alert('cancel')} />
+                  <Button label="Cancel" onClick={() => TodoActions.toggleIsAdding()} />
                 </Box>
               </Menu>
             </Footer>
